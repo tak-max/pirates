@@ -49,7 +49,8 @@ class south_cliff (location.SubLocation):
         elif (verb == "east"):
             config.the_player.next_loc = self.main_location.locations["east_cliff"]
         elif (verb == "west"):
-            display.announce ("You walk all the way around the island on the beach. It's not very interesting.")
+            display.announce ("You go all the way around the island and end up on the east side.")
+            config.the_player.next_loc = self.main_location.locations["east_cliff"]
 
 class East_Cliff (location.SubLocation):
     def __init__ (self, m):
@@ -208,12 +209,13 @@ class Forest(location.SubLocation):
         self.verbs['south'] = self
         self.verbs['west'] = self
         self.pedestalused = False
+        enter_var = True
 
     def enter(self):
-        var = True
-        if var == True:
+        
+        if self.enter_var == True:
             display.announce('The ladder leads to a hole in a forest floor. \nAs the last pirate climbs up the ladder breaks, the other pirates are just able to pull him up.')
-            var = False
+            self.enter_var = False
         display.announce('you see a pedestal with numbers and symbols. You may investigate.')
 
     
@@ -295,12 +297,14 @@ class Cliff(location.SubLocation):
 
     def enter(self):
         display.announce('You walk up to the cliff edge.\nYou see your rowboat at the bottom.')
-        if "rope" in config.the_player.inventory:
-            choice = display.get_text_input('Do you want to climb down with your rope?')
-            if ("yes" in choice.lower()):
-                self.main_location.end_visit()
-                config.the_player.go = True
-                display.announce('you climb down and row back to the ship.')
+        for i in config.the_player.inventory:
+            if type(i) == rope:
+                choice = display.get_text_input('Do you want to climb down with your rope?')
+                if ("yes" in choice.lower()):
+                    self.main_location.end_visit()
+                    config.the_player.go = True
+                    display.announce('you climb down and row back to the ship.')
+                break
         else:
             choice = display.get_text_input('Do you want to jump down?')
             if ("yes" in choice.lower()):
