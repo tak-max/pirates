@@ -68,11 +68,11 @@ class East_Cliff (location.SubLocation):
 
 
     def process_verb(self, verb, cmd_list, nouns):
-        if(verb == "investigate"):
+        if (verb == "investigate"):
             self.HandleTunnel()
-#        if verb(verb == "north" or verb == "east" or verb == "west" or verb == "south"):
-#            display.announce('you end up back at your boat.')
-#            self.main_location.end_visit()
+        if (verb == "north" or verb == "east" or verb == "west" or verb == "south"):
+            display.announce('you end up back at your boat.')
+            self.main_location.end_visit()
 
 
     # Handles the logic and output for the tunnel
